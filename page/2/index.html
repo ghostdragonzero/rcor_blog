@@ -184,7 +184,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">450</span>
+          <span class="site-state-item-count">452</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -197,7 +197,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/blog/tags/">
           
-        <span class="site-state-item-count">442</span>
+        <span class="site-state-item-count">443</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -233,6 +233,150 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2024/12/01/%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-ghost/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2024/12/01/%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-ghost/" class="post-title-link" itemprop="url"><第三阶段总结-ghost></a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-12-01 19:38:07" itemprop="dateCreated datePublished" datetime="2024-12-01T19:38:07+00:00">2024-12-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-12-20 13:13:27" itemprop="dateModified" datetime="2024-12-20T13:13:27+00:00">2024-12-20</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h1><p>这个月因为一些工作的原因并没有很好的完成课程的学习挑战这些内容，对于课程只看完了宏内核部分。但是我认为我学到了我感兴趣的部分。对于这部分我学习的感受就是是对于之前的os开发的进一步学习，对于unikernel的组件就是之前rustos实现的部分的更加具体的模块化。（虽然我还是在涉及内存以及地址的部分有些不明白）</p>
+<h1 id="二、-unikernel"><a href="#二、-unikernel" class="headerlink" title="二、 unikernel"></a>二、 unikernel</h1><h2 id="对比裸机和RTOS"><a href="#对比裸机和RTOS" class="headerlink" title="对比裸机和RTOS"></a>对比裸机和RTOS</h2><p>对比裸机  这样的组件化操作系统可以更快的添加功能  适配硬件<br>对比RTOS 可以更加灵活的做删减 比如替换使用的调度算法<br>更像是一种进化的裸机  所有操作系统都是为了应用而存在的<br>为应用的功能拆解出各种需要的模块  再拼装成一个只为了这个应用而存在的系统</p>
+<h2 id="系统有关与系统无关模块"><a href="#系统有关与系统无关模块" class="headerlink" title="系统有关与系统无关模块"></a>系统有关与系统无关模块</h2><p>所有的使用的模块都算作是系统无关的<br>只有你使用这些系统无关的模块所构成的就是一个系统有关的系统<br>说到底就是可替换和不可替换的<br>对于一些模块的功能是不可替换的 就可以说是系统相关的<br>而对于一部分模块来说就是 可有可无根据需要的特性去选择的就是系统无关的</p>
+<h2 id="我的理解"><a href="#我的理解" class="headerlink" title="我的理解"></a>我的理解</h2><p>感觉就像是发展又发展了回去 一开始都是专业的产品 后面开始做通用性的产品当达到一定程度后又开始专业化</p>
+<h2 id="进一步思考"><a href="#进一步思考" class="headerlink" title="进一步思考"></a>进一步思考</h2><p>那就说明这个是一个高度定制化的系统<br>目的应该就是在性能更低的平台 来实现更为定制的功能<br>所以我理解就是  一个定制产品 而不是一个需要很多额外性能  来在一个通用计算机上实现的产品<br>那么我认为 这个系统应该要和芯片相绑定的 甚至这个应该更为适合fpga平台<br>来实现真正意义上的软硬一体<br>一个从一开始就是为了通用计算设计制造的芯片<br>我觉得会成为这样定制性系统的瓶颈  如果发展下去</p>
+<h1 id="宏内核"><a href="#宏内核" class="headerlink" title="宏内核"></a>宏内核</h1><p>相对于unikernl 宏内核增加了一个用户特权级<br>这样不同的特权级  让应用更加安全因为不能直接访问到内核内的</p>
+<p>多伪造了一个所谓的应用态 调用了一次sret来让系统从特权态进入到用户态<br>我认为这样扩展出来的宏内核系统  就像是在嵌入式设备中常见的中枢网关  </p>
+<h2 id="我的理解-1"><a href="#我的理解-1" class="headerlink" title="我的理解"></a>我的理解</h2><p>这样扩展ArcOS的内核类型我觉得就像是课里面老师说的对于设备端使用unikernel 对于管理端使用宏内核<br>我感觉这是在构建一个分布式的场景</p>
+<p>unikernel的异构思想  就是将共同的组件作为基础<br>而将不同内核最大的特性作为独立的组件  这样就类似存在多种内核的系统<br>通过多种异构的内核 但是其中又使用了共同的模块又能有一定的统一性<br>或者说后期的维护 可以由一个团队共同维护一个场景<br>可以避免互相不清楚对方的模块导致无法定位问题所在的地方</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2024/11/10/2024-%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-ghost/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="rcore-os Group">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rcore-os Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2024/11/10/2024-%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-ghost/" class="post-title-link" itemprop="url">2024_第二阶段总结_ghost</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-11-10 20:14:22" itemprop="dateCreated datePublished" datetime="2024-11-10T20:14:22+00:00">2024-11-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-12-20 13:13:27" itemprop="dateModified" datetime="2024-12-20T13:13:27+00:00">2024-12-20</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h1><p>毕业之后一直工作都是在做c嵌入式驱动开发，是和同事闲聊的时候了解这个项目的就开始学下去了  从2024春季就已经开始学了但是因为一些事情耽误了就没有完成<br>对我个人来说主要是好奇想看看经常看到的所谓写操作系统是做什么，以及我在工作中也会看到rust的一些内容对这个语言也很好奇</p>
+<h1 id="二、基础阶段"><a href="#二、基础阶段" class="headerlink" title="二、基础阶段"></a>二、基础阶段</h1><p><img src="/blog/.io//1-1.png" alt="错误记录"></p>
+<p>在基础学习的时候我认为这样的错误记录是很有必要的<br>因为我基础并不好经常对于书上看到的方法看到就忘了 实际写起来我最大的感受就是<br>1、如果有多个数据结构嵌套我很容易就搞不清哪里要复制哪里不复制<br>2、闭包按照我理解就是一个函数指针  在传递闭包的时候一开始没理解总是搞不清楚到底是怎么回事</p>
+<p><strong>以及在完成一阶段之后我才安装了rust-analyer也算是踩坑了把  有这个插件才发现可以很快就发现错误不用在一次次编译</strong></p>
+<h1 id="三、OS专业阶段"><a href="#三、OS专业阶段" class="headerlink" title="三、OS专业阶段"></a>三、OS专业阶段</h1><p>专业阶段在整个学习的过程中对我而言最困难的是第四章和第八章<br>在第四章 我觉得内存的边界条件卡住了很久  主要还是理解不够  明白了 地址空间 应用空间 需要转换<br>也看明白了虚拟地址的寻址方法  但是真的感觉新的文档没有图我一开始没理解的就是 他三级页表怎么寻址的过程<br>后面才真的理解上一级页表的值代表的是下一级要去找的page 再再下一级page上找到对应页表项  才实现了多级页表的寻址<br><img src="/blog/.io//3-1.png" alt="三级页表"></p>
+<p>整体来说我觉得这个专业阶段 首先文档需要图<br>并且我发现只看一遍效果很差  需要边看边记 并且对于代码讲解最好是能够记录并且依次添加注释 明白每一步再做什么不是只看文档中的讲解就过一遍就结束<br><img src="/blog/.io//3-2.jpg" alt="结构体关系"><br>以及我觉得再实验过程中最重要的是搞清楚各个结构体所代表的实际意义<br>并且可以集中在图上展示   不然我在做ch6一开始总是错就是 没梳理清楚 disk_inode inode OS_inode还有目录项分别都是些什么 导致ch6经常找错<br>于是我就在草稿纸上根据理解写了我对于这些数据结构的理解和关联很快就解决了</p>
+<p>实验的时候还有一点  有时候我总喜欢通过结构体之间的关系来找对应的数据  但是在rust里这样做我觉的很复杂<br>最好的方式就是在容易得到的结构体中保存需要的数据</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2024/11/10/rcore-1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -264,7 +408,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-12-01 11:53:19" itemprop="dateModified" datetime="2024-12-01T11:53:19+00:00">2024-12-01</time>
+                <time title="Modified: 2024-12-20 13:13:27" itemprop="dateModified" datetime="2024-12-20T13:13:27+00:00">2024-12-20</time>
               </span>
 
           
@@ -328,7 +472,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-12-01 11:53:19" itemprop="dateModified" datetime="2024-12-01T11:53:19+00:00">2024-12-01</time>
+                <time title="Modified: 2024-12-20 13:13:27" itemprop="dateModified" datetime="2024-12-20T13:13:27+00:00">2024-12-20</time>
               </span>
 
           
@@ -396,7 +540,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-12-01 11:53:19" itemprop="dateModified" datetime="2024-12-01T11:53:19+00:00">2024-12-01</time>
+                <time title="Modified: 2024-12-20 13:13:27" itemprop="dateModified" datetime="2024-12-20T13:13:27+00:00">2024-12-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -498,7 +642,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-12-01 11:53:19" itemprop="dateModified" datetime="2024-12-01T11:53:19+00:00">2024-12-01</time>
+                <time title="Modified: 2024-12-20 13:13:27" itemprop="dateModified" datetime="2024-12-20T13:13:27+00:00">2024-12-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -638,7 +782,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-12-01 11:53:19" itemprop="dateModified" datetime="2024-12-01T11:53:19+00:00">2024-12-01</time>
+                <time title="Modified: 2024-12-20 13:13:27" itemprop="dateModified" datetime="2024-12-20T13:13:27+00:00">2024-12-20</time>
               </span>
 
           
@@ -726,7 +870,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-12-01 11:53:19" itemprop="dateModified" datetime="2024-12-01T11:53:19+00:00">2024-12-01</time>
+                <time title="Modified: 2024-12-20 13:13:27" itemprop="dateModified" datetime="2024-12-20T13:13:27+00:00">2024-12-20</time>
               </span>
 
           
@@ -797,7 +941,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-12-01 11:53:19" itemprop="dateModified" datetime="2024-12-01T11:53:19+00:00">2024-12-01</time>
+                <time title="Modified: 2024-12-20 13:13:27" itemprop="dateModified" datetime="2024-12-20T13:13:27+00:00">2024-12-20</time>
               </span>
 
           
@@ -820,82 +964,6 @@
             </div>
           <!--/noindex-->
         
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2024/11/08/2024%E7%A7%8B%E5%86%AC%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-Jasonhonghh/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="rcore-os Group">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rcore-os Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2024/11/08/2024%E7%A7%8B%E5%86%AC%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-Jasonhonghh/" class="post-title-link" itemprop="url">2024秋冬开源操作系统训练营第二阶段总结-Jasonhonghh</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2024-11-08 10:58:18" itemprop="dateCreated datePublished" datetime="2024-11-08T10:58:18+00:00">2024-11-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-12-01 11:53:19" itemprop="dateModified" datetime="2024-12-01T11:53:19+00:00">2024-12-01</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Rustlings"><a href="#Rustlings" class="headerlink" title="Rustlings"></a>Rustlings</h1><p><strong>这是我第一次刷Rustlings，还是很有收获的。最后新增的一些算法题也很有意思，不过整体来说还是适合有Rust语法知识基础的人学习。最后几个算法题刷的很慢，我的数据结构和算法学的不是很好，在这里有学到很多。不过我也参考了许多资料。如果有人看的话，也算一点收获叭。整体来说Rust写起来很爽！</strong></p>
-<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><h2 id="Rust语法基础"><a href="#Rust语法基础" class="headerlink" title="Rust语法基础"></a>Rust语法基础</h2><p><strong>初学者应该主要从三个方面了解Rust：Rust语法基础，Cargo以及Rust的标准库和官方文档。</strong></p>
-<p><a href="https://kaisery.github.io/trpl-zh-cn/" target="_blank" rel="noopener">Rust 程序设计语言 - Rust 程序设计语言 简体中文版</a></p>
-<p><strong>这是社区推荐的的</strong><a href="https://doc.rust-lang.org/stable/book/#the-rust-programming-language" target="_blank" rel="noopener">The Rust Programming Language</a>的中文翻译版本。主要讲Rust语法基础，国内有开源作者撰写了<a href="https://course.rs/about-book.html" target="_blank" rel="noopener">Rust语言圣经</a>两本书的内容比较相似，后者语言比较生动，内容也比较丰富，前者的话语言精炼一些，个人比较推荐去读前者，读不懂的时候再去看Rust语言圣经的版本，会有新的收获。</p>
-<h2 id="The-Cargo-Book"><a href="#The-Cargo-Book" class="headerlink" title="The Cargo Book"></a>The Cargo Book</h2><p><a href="https://doc.rust-lang.org/stable/cargo/" target="_blank" rel="noopener">Introduction - The Cargo Book</a></p>
-<p><strong>The Cargo Book是关于Cargo的一本书，初学者可能只会使用到Cargo的一少部分命令和参数，但实际上，Rust受到广泛关注的一个原因，就来自于强大的构建和包管理工具Cargo，值得注意的是这本书的中文翻译版本最后的更新时间是2019年，相关的内容和英文最新版差别比较大，最好读英文版本。</strong></p>
-<h2 id="Rust标准库文档"><a href="#Rust标准库文档" class="headerlink" title="Rust标准库文档"></a>Rust标准库文档</h2><p><a href="https://doc.rust-lang.org/std/all.html" target="_blank" rel="noopener">List of all items in this crate</a></p>
-<p><strong>Rust的标准库文档涵盖了基础阶段大部分的内容，结构体、宏、智能指针等等都在标准库文档中有详细的说明，Rust程序相比其他许多语言确实比较在学习和编写上难度更大 ，但是Rust设计者们也在极力减少开发者的心智负担，对于一些数据类型和结构，标准库中定义了一些好用的方法和属性，方便大家学习和使用。另外，标准库中也定义了一些基本的API接口，方便开发。总之Rust标准库是一座宝库。</strong></p>
-<h2 id="Rust"><a href="#Rust" class="headerlink" title="Rust"></a>Rust</h2><p><a href="https://crates.io/" target="_blank" rel="noopener">crates.io: Rust Package Registry</a></p>
-<p><strong>crate.io是提供了诸多Rust开发者开发的库，可以直接在cargo.toml里面配置库名和版本就能使用，很方便，基础阶段Rust标准库文档是小宝库，在后续进阶开发阶段，crate.io就是名副其实的大宝库。言下之意是，基础阶段暂时不用看这个。</strong></p>
-<h2 id="Youtube"><a href="#Youtube" class="headerlink" title="Youtube"></a>Youtube</h2><p><a href="https://www.youtube.com/watch?v=ogCvZC-o0ms&list=PLNZe95GmIRd_lrbSdcjCT2V7uG4pVhn0S" target="_blank" rel="noopener">Rustlings 5.0 | Intro | Learn Rust Interactively</a></p>
-<p>**目前国内的Rust学习资源还在初级阶段，B站上暂时没有很完善的教程，推荐一个油管博主的视频，讲到比较陌生不好理解的地方，博主会把Rust基础教程和标准库文档贴出来，对着讲解，还是很有收获的，还能教你怎么快速找到自己需要查的知识点。但是这个博主是之前录的视频，没有训练营版本Rustlings最后一些练习的讲解。</p>
-
       
     </div>
 
@@ -945,7 +1013,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-12-01 11:53:19" itemprop="dateModified" datetime="2024-12-01T11:53:19+00:00">2024-12-01</time>
+                <time title="Modified: 2024-12-20 13:13:27" itemprop="dateModified" datetime="2024-12-20T13:13:27+00:00">2024-12-20</time>
               </span>
 
           
@@ -986,87 +1054,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://rcore-os.github.io/blog/2024/11/08/RUST-oscamp-stage-1-2-Hornos3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="rcore-os Group">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rcore-os Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2024/11/08/RUST-oscamp-stage-1-2-Hornos3/" class="post-title-link" itemprop="url">RUST-oscamp stage 1-2 - Hornos3</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2024-11-08 10:28:28" itemprop="dateCreated datePublished" datetime="2024-11-08T10:28:28+00:00">2024-11-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-12-01 11:53:19" itemprop="dateModified" datetime="2024-12-01T11:53:19+00:00">2024-12-01</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/report/" itemprop="url" rel="index"><span itemprop="name">report</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>有关于Rust基础，是笔者在做毕设时因需要而学的，故而阶段一没有花费什么精力。但是对于阶段二，情况则截然不同。笔者没有听从项目文档的建议，选择了单枪匹马完成所有5个任务，期间也出现了许多迷之错误…</p>
-<p>对于Rust这门编程语言来说，笔者个人认为，虽然它可以被用来编写底层的代码，包括bootloader、UEFI、OS内核等等，但是它的编译器已经决定了Rust的上限。笔者不才，曾经研究过一部分Rust的反编译分析，发现Rust对于栈内存的使用似乎非常奢侈。与C语言不同，Rust对于Shadowing的处理不是复用原来的栈内存空间，而是直接使用新的空间。另外Rust的结构也相比C臃肿很多，这就导致Rust作为底层架构的开发语言时，使用的内存空间要远多于C语言，粗略估计，实现同一种功能的情况下，Rust平均需要比C至少多1倍的栈内存空间。在时间效率上，Rust要实现与C语言相同的时间效率，编写的unsafe代码定然不少，对于开发人员的要求也必然不低，在这一点上，Rust相较于C可能并没有提升太多的编程效率。因此，使用Rust与C编写底层代码各有千秋，Rust定然无法取代C，而C也必然要接受Rust的发展。当前，Rust底层生态严重不足，导致上层建筑难以跟进，一旦Rust适配了足够多的ISA与外设，将大大方便底层中较高级别的编程开发，但对于MCU等内存需求、效率需求高的场景，C依然是不可替代的选择。</p>
-<p>在此附上笔者的blog网址，其中有之前编写的9篇Rust逆向分析blog：<a href="hornos3.github.io">网址</a>（<del>界面丑了点，不要在意</del>）</p>
-<p>根据笔者对于Rust反编译的研究理解发现，Rust的各类结构具有一定的特征，在进行调试时，如果能够识别出此类特征，就能将汇编代码与源代码相对应，从而大致恢复源代码的执行逻辑，甚至直接逆向还原出源代码。正是因为笔者对Rust汇编的理解，在本次实验阶段二中的调试才能更快地找到问题所在。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/blog/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/blog/">1</a><span class="page-number current">2</span><a class="page-number" href="/blog/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/45/">45</a><a class="extend next" rel="next" href="/blog/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/blog/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/blog/">1</a><span class="page-number current">2</span><a class="page-number" href="/blog/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/46/">46</a><a class="extend next" rel="next" href="/blog/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
